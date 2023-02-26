@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Update</title>
+    <link th:replace="fragments/bootstrap.html">
+</head>
+<body id="page-top">
+<div id="wrapper">
+    <div th:insert="fragments/sidebar"></div>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <div th:insert="fragments/header"></div>
+
+            <div class="container-fluid">
+                <div class="col-xl-5 col-lg-5 container-fluid">
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                            <div class="mt-4  small">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4" th:text="|Edit ${taskQueueToUpdate.getName()} task queue|"></h1>
+                                    </div>
+                                    <form class="user" th:action="@{/taskQueues/update/{id}(id=${taskQueueToUpdate.id})}" method="post" th:object="${departmentToUpdate}">
+                                        <div class="form-group">
+                                            <label for="exampleInputName" class="form-label">Name</label>
+                                            <input type="text" class="form-control"
+                                                   name="name"
+                                                   id="exampleInputName" aria-describedby="emailHelp"
+                                                   placeholder="Enter task queue name..." th:value="${taskQueueToUpdate.getName()}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="exampleInputDescription" class="form-label">Description</label>
+                                            <p><textarea class="form-control" id="exampleInputDescription" name="description" placeholder="description" th:text="${taskQueueToUpdate.getDescription()}"></textarea></p>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="exampleInputLogin" class="form-label">Login head of department</label>
+                                            <input type="text" class="form-control"
+                                                   id="exampleInputLogin" placeholder="description" name="departmentName" th:value="${taskQueueToUpdate.getDepartmentName()}" value="Empty">
+                                        </div>
+
+                                        <hr>
+
+                                        <div class="row justify-content-around">
+                                            <button  type="submit" class="btn btn-primary col-xl-4 col-md-6 mb-5">Edit</button>
+                                            <a> <div class="btn btn-danger  col-xl-4 col-md-6 mb-5" ><a>delete</a> </div></a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:insert="fragments/footer"></div>
+    </div>
+</div>
+</body>
+</html>

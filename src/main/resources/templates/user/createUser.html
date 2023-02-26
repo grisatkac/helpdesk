@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create user</title>
+</head>
+<body id="page-top">
+<div id="wrapper">
+    <div th:insert="fragments/sidebar"></div>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <div th:insert="fragments/header"></div>
+
+            <div class="container-fluid">
+                <div class="col-xl-5 col-lg-5 container-fluid">
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                            <div class="mt-4  small">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                                    </div>
+                                    <form class="user" action="/auth/register" method="post">
+                                        <div class="form-group row">
+                                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                                <input type="text" name="firstName" class="form-control form-control-user" id="exampleFirstName"
+                                                       placeholder="First Name">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="text" name="lastName" class="form-control form-control-user" id="exampleLastName"
+                                                       placeholder="Last Name" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="email" name="email" class="form-control form-control-user" id="exampleInputEmail"
+                                                   placeholder="Email Address">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input type="login" name="login" class="form-control form-control-user" id="exampleInputLogin"
+                                                   placeholder="Login">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" name="password" class="form-control form-control-user"
+                                                   id="exampleInputPassword" placeholder="Password">
+                                        </div>
+
+                                        <hr>
+
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">Create Account</button>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:insert="fragments/footer"></div>
+    </div>
+
+
+</div>
+</body>
+</html>

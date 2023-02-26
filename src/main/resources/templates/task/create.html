@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create task</title>
+</head>
+<body id="page-top">
+<div id="wrapper">
+    <div th:insert="fragments/sidebar"></div>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <div th:insert="fragments/header"></div>
+
+            <div class="container-fluid">
+                <div class="col-xl-5 col-lg-5 container-fluid">
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                            <div class="mt-4  small">
+                                <div th:if="${success == null}" class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Create task</h1>
+                                    </div>
+                                    <form class="user" th:action="@{/tasks/create}" method="post">
+                                        <div class="form-group">
+                                            <label for="exampleInputName" class="form-label">Name</label>
+                                            <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    name="name"
+                                                    id="exampleInputName"
+                                                    aria-describedby="emailHelp"
+                                                    placeholder="Title of the task">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label
+                                                    for="exampleInputDescription"
+                                                    class="form-label">
+                                                Description
+                                            </label>
+                                            <p>
+                                                <textarea
+                                                    class="form-control"
+                                                    id="exampleInputDescription"
+                                                    name="description"
+                                                    placeholder="Task description">
+                                                </textarea>
+                                            </p>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="inputDatalist" class="form-label">Urgency</label>
+                                            <input
+                                                    class="form-control"
+                                                    list="urgencyListOptions"
+                                                    id="inputDatalist"
+                                                    name="urgency"
+                                                    placeholder="Type to search urgency"
+                                                    value="LOW">
+
+                                            <datalist id="urgencyListOptions" >
+                                                <th:block th:each="urgency: ${data.urgencyList}">
+                                                    <option th:value="${urgency.name()}"></option>
+                                                    </p>
+                                                </th:block>
+                                            </datalist>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="inputTaskQueueList" class="form-label">Select task queue</label>
+                                            <input
+                                                    class="form-control"
+                                                    list="taskQueueListOptions"
+                                                    id="inputTaskQueueList"
+                                                    name="taskQueueName"
+                                                    placeholder="Type to search urgency"
+                                                    >
+                                            <datalist id="taskQueueListOptions" >
+                                                <th:block th:each="taskQueue: ${data.queueNamesList}">
+                                                        <option th:value="${taskQueue}"></option>
+                                                    </p>
+                                                </th:block>
+                                            </datalist>
+                                        </div>
+
+                                        <hr>
+
+                                        <div class="row justify-content-around">
+                                            <button  type="submit" class="btn btn-primary col-xl-4 col-md-6 mb-5">Create</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div th:unless="${success != null}" th:text="${success}">Ok</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:insert="fragments/footer"></div>
+    </div>
+
+
+</div>
+</body>
+</html>

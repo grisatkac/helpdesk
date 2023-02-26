@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    <link th:replace="fragments/bootstrap.html">
+</head>
+<body id="page-top">
+<div id="wrapper">
+    <div th:insert="fragments/sidebar"></div>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <div th:insert="fragments/header"></div>
+
+            <div class="container-fluid">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Users</h6>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <select th:field="${page.pageSize}">
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="25">25</option>
+                                </select>
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                    <tr>
+                                        <th><a th:href="@{'/users/all/?pageNumber=' + ${page.currentPage} + '&sortBy=firstName&sortDir=' + ${page.reverseSortDir}}">
+                                            First name</a></th>
+                                        <th><a th:href="@{'/users/all/?pageNumber=' + ${page.currentPage} + '&sortBy=lastName&sortDir=' + ${page.reverseSortDir}}">
+                                            Last name</a></th>
+                                        <td>Email</td>
+                                        <td>Login</td>
+                                        <th sec:authorize="hasRole('ROLE_ADMIN')">Action</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tfoot>
+                                    <tr>
+                                        <th>First name</th>
+                                        <th>Last name</th>
+                                        <td>Email</td>
+                                        <td>Login</td>
+                                        <th sec:authorize="hasRole('ROLE_ADMIN')">Action</th>
+                                    </tr>
+                                    </tfoot>
+
+                                    <tbody th:each="user : ${page.items}">
+                                    <td>
+                                        <a th:href="@{/users/{id}(id=${user.id})}">
+                                            <p th:text="${user.firstName}"></p>
+                                        </a>
+                                    </td>
+                                    <td th:text="${user.lastName}"></td>
+                                    <td th:text="${user.email}"></td>
+                                    <td th:text="${user.login}"></td>
+
+                                    <td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/users/update/{id}(id=${user.id})}">Edit</a></td>
+                                    </tbody>
+
+
+                                </table>
+
+                                <nav aria-label="Page navigation" class="paging">
+                                    <ul class="pagination" th:if="${page.totalPages > 1}">
+                                        <li class="page-item" th:classappend="${page.currentPage < 1 ? 'disabled' : ''}">
+                                            <a class="page-link" th:href="@{'/users/all/?pageNumber=' + ${page.currentPage - 1} + '&sortBy=' + ${page.sortBy} + '&sortDir=' + ${page.sortDir}}"
+                                               tabindex="-1">Previous</a>
+                                        </li>
+
+
+                                        <th:block th:each="item, index : ${#numbers.sequence(0, page.totalPages - 1)}">
+                                            <li class="page-item" th:classappend="${index == page.currentPage? 'selected' : ''}">
+                                                <a class="page-link" th:href="@{'/users/all/?pageNumber=' + ${index.index} + '&sortBy=' + ${page.sortBy} + '&sortDir=' + ${page.sortDir}} "
+                                                   th:text="${index.count}"></a>
+                                            </li>
+                                            </li>
+                                        </th:block>
+
+                                        <li class="page-item" th:classappend="${page.currentPage + 1  == page.totalPages? 'disabled' : ''}">
+                                            <a class="page-link" th:href="@{'/users/all/?pageNumber=' + ${page.currentPage + 1} + '&sortBy=' + ${page.sortBy} + '&sortDir=' + ${page.sortDir}}">Next</a>
+                                        </li>
+
+                                    </ul>
+
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:insert="fragments/footer"></div>
+    </div>
+
+
+</div>
+</body>
+</html>

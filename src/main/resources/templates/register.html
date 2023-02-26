@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link th:replace="fragments/bootstrap.html">
+</head>
+<body>
+    <div class="container">
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <div class="row">
+                <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                <div class="col-lg-7">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                        </div>
+                        <form class="user" th:action="@{/register}" th:object="${user}" method="post">
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input type="text" name="firstName"
+                                           class="form-control form-control-user"
+                                           id="exampleFirstName"
+                                           placeholder="First Name"
+                                           th:value="${user.firstName != null}? ${user.firstName} : ''">
+                                    <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="alert alert-danger" role="alert"/>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text"
+                                           name="lastName"
+                                           class="form-control
+                                           form-control-user"
+                                           id="exampleLastName"
+                                           placeholder="Last Name"
+                                           th:value="${user.lastName != null}? ${user.lastName} : ''">
+                                    <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="alert alert-danger" role="alert"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input
+                                        type="email"
+                                        name="email"
+                                        class="form-control
+                                        form-control-user"
+                                        id="exampleInputEmail"
+                                        placeholder="Email Address"
+                                        th:value="${user.email != null}? ${user.email} : ''">
+                                <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="alert alert-danger" role="alert"/>
+                            </div>
+
+                            <div class="form-group">
+                                <input
+                                        type="login"
+                                        name="login"
+                                        class="form-control
+                                        form-control-user"
+                                        id="exampleInputLogin"
+                                        placeholder="Login"
+                                        th:value="${user.login != null}? ${user.login} : ''">
+                                <div th:if="${#fields.hasErrors('login')}" th:errors="*{login}" class="alert alert-danger" role="alert"/>
+                            </div>
+
+                            <div class="form-group">
+                                <input
+                                        type="password"
+                                        name="password"
+                                        class="form-control
+                                        form-control-user"
+                                        id="exampleInputPassword"
+                                        placeholder="Password"
+                                        th:value="${user.password != null}? ${user.password} : ''">
+                                <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="alert alert-danger" role="alert"/>
+                            </div>
+
+
+
+                            <button type="submit" class="btn btn-primary btn-user btn-block">Register Account</button>
+
+                        </form>
+                        <hr>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div th:insert="fragments/footer.html"></div>
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Task information</title>
+    <link th:replace="fragments/bootstrap.html">
+</head>
+<body id="page-top">
+<div id="wrapper">
+    <div th:insert="fragments/sidebar"></div>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <div th:insert="fragments/header"></div>
+
+            <div class="container-fluid">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Task information</h6>
+                        <div class="card-body" th:object="${task}">
+                            <h5 class="card-title" th:text="|*{name}|"></h5>
+                            <hr>
+                            <p class="card-text" th:text="|Description: *{description}|"></p>
+                            <p class="card-text" th:text="|Created date: *{createdDate}|"></p>
+                            <p class="card-text" th:text="|Urgency: *{urgency}|"></p>
+                            <p class="card-text" th:text="|Status: *{status}|"></p>
+
+                            <p class="card-text">Owner of task
+                                <span th:if="${task.userOwner != null}">
+                                    <a th:text="|*{userOwner.firstName}  *{userOwner.lastName}|" th:href="@{/users/{id}(id=*{userOwner.id})}"></a>
+                                </span>
+                                <span th:unless="${task.userOwner != null}">Task don't have owner</span>
+                            </p>
+
+                            <p class="card-text">Executor of task
+                                <span th:if="${task.userExecutor != null}">
+                                    <a th:text="|*{userExecutor.firstName}  *{userExecutor.lastName}|" th:href="@{/users/{id}(id=*{userExecutor.id})}"></a>
+                                </span>
+                                <span th:unless="${task.userOwner != null}">Task don't have executor</span>
+                            </p>
+
+                            <p class="card-text">Queue of task
+                                <span th:if="${task.queue != null}">
+                                    <a th:text="*{queue.name}" th:href="@{/taskQueues/{id}(id=*{queue.id})}"></a>
+                                </span>
+                                <span th:unless="${task.queue != null}">Task doesn't consist in some task queue</span>
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:insert="fragments/footer"></div>
+    </div>
+
+
+</div>
+</body>
+</html>

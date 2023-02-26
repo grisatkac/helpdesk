@@ -1,0 +1,15 @@
+package by.tms.tkach.helpdesk.controllers;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/admin")
+public class AdminController {
+
+    @GetMapping("/departments/create")
+    public String getCreateDepartmentPage() {
+        return "department/departmentCreate";
+    }
+}

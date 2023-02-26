@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Sidebar</title>
+    <link th:replace="fragments/bootstrap.html">
+</head>
+<body>
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+  <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/main">
+    <div class="sidebar-brand-icon rotate-n-15">
+      <i class="fas fa-laugh-wink"></i>
+    </div>
+    <div class="sidebar-brand-text mx-3">Help desk </div>
+  </a>
+
+  <hr class="sidebar-divider my-0">
+
+  <li class="nav-item active">
+    <a class="nav-link" href="index.html">
+      <i class="fas fa-fw fa-chart-line"></i>
+      <span>Dashboard</span></a>
+  </li>
+
+  <hr class="sidebar-divider">
+
+  <div class="sidebar-heading">
+    To Do
+  </div>
+
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+       aria-expanded="true" aria-controls="collapseTwo">
+      <i class="fas fa-fw fa-clipboard-list"></i>
+      <span>Tasks</span>
+    </a>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">Type of tasks:</h6>
+        <a class="collapse-item" href="/tasks/all/assignable">Assigned tasks</a>
+        <a class="collapse-item" href="/tasks/all/executable">Executable tasks</a>
+        <a class="collapse-item" href="/tasks/all">Tasks</a>
+        <a class="collapse-item" href="/tasks/create">Create task</a>
+        <a class="collapse-item" href="/tasks/all/urgency?filter=MIDDLE">Low urgency</a>
+      </div>
+    </div>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="404.html">
+      <i class="fas fa-fw fa-list-ul"></i>
+      <span>Queues</span>
+    </a>
+  </li>
+
+  <hr class="sidebar-divider">
+
+  <div class="sidebar-heading">
+    Organisation
+  </div>
+
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="/departments/all">
+      <i class="fas fa-fw fa-sitemap"></i>
+      <span>Departments</span>
+    </a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link" href="/users">
+      <i class="fas fa-fw fa-users"></i>
+      <span>Users</span></a>
+  </li>
+
+  <hr class="sidebar-divider d-none d-md-block">
+
+
+
+  <div sec:authorize="hasRole('ROLE_ADMIN')"></div>
+
+  <div sec:authorize="hasRole('ROLE_ADMIN')" class="sidebar-heading">
+    Admin management
+  </div>
+
+  <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers"
+       aria-expanded="true" aria-controls="collapseUsers">
+      <i class="fas fa-fw fa-clipboard-list"></i>
+      <span>Users management</span>
+    </a>
+    <div id="collapseUsers" class="collapse" aria-labelledby="headingUsers" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <a class="collapse-item" href="/users/create">Create users</a>
+        <a class="collapse-item" href="/users/all">List of users</a>
+      </div>
+    </div>
+  </li>
+
+  <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDepartments"
+       aria-expanded="true" aria-controls="collapseDepartments">
+      <i class="fas fa-fw fa-clipboard-list"></i>
+      <span>Departments</span>
+    </a>
+    <div id="collapseDepartments" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <a class="collapse-item" href="/departments/create">Create department</a>
+        <a class="collapse-item" href="/departments/all">List of departments</a>
+      </div>
+    </div>
+  </li>
+
+  <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTasksQueue"
+       aria-expanded="true" aria-controls="collapseTasksQueue">
+      <i class="fas fa-fw fa-clipboard-list"></i>
+      <span>Task queues</span>
+    </a>
+    <div id="collapseTasksQueue" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <a class="collapse-item" href="/taskQueues/create">Create Queue</a>
+        <a class="collapse-item" href="/taskQueues/all">List of queue</a>
+      </div>
+    </div>
+  </li>
+
+  <hr sec:authorize="hasRole('ROLE_ADMIN')" class="sidebar-divider d-none d-md-block">
+
+  <div class="text-center d-none d-md-inline">
+    <button class="rounded-circle border-0" id="sidebarToggle"></button>
+  </div>
+</ul>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Main</title>
+    <link th:replace="fragments/bootstrap.html">
+</head>
+<body id="page-top">
+<div id="wrapper">
+  <div th:insert="fragments/sidebar"></div>
+
+  <div id="content-wrapper" class="d-flex flex-column">
+
+    <div id="content">
+      <div th:insert="fragments/header"></div>
+
+      <div class="container-fluid">
+        <div class="d-sm-flex align-items-center justify-content-around mb-5">
+          <h1 class="h2 mb-0 text-gray-800">This is the start page of the introduction to my project</h1>
+        </div>
+        <p class="display-5">
+          Help desk can help employees of Organisation communicate and make tasks. The project is under
+          development stage.
+        </p>
+        <p>
+          Let's talk it detail about project. This project consist of: users, departments, tickets,
+          orders. I want to improve project using databases, JWT tokens in future. Jsp pages will be added
+          when backend code has been done.
+        </p>
+
+        <div class="d-sm-flex align-items-center justify-content-around mb-5">
+          <h2 class="h3 mb-0 text-gray-800">Components of help desk</h2>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="card mb-4 border-secondary">
+              <div class="card-header">
+                Tickets
+              </div>
+              <div class="card-body">
+                Ticket needs for describing task. User can create, complete, update, delete,
+                redirect to another user ticket.
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="card mb-4 border-secondary">
+              <div class="card-header">
+                User
+              </div>
+              <div class="card-body">
+                For using help desk you must be user of this system. User can have some roles: user,
+                admin. User is the part of department.
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="card mb-4 border-secondary">
+              <div class="card-header">
+                Queues
+              </div>
+              <div class="card-body">
+                Queue have one logical type of tickets. Queues consists of: name of queue, employees
+                who work with this type of tickets.
+                For example in one department 5 employees can be in A queue and another 5 employees
+                can be in B queue.
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="card mb-4 border-secondary">
+              <div class="card-header">
+                Department
+              </div>
+              <div class="card-body">
+                Department consist of pepole with the same scope of tasks. For example proggers,
+                system administrators, economists.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div th:insert="fragments/footer"></div>
+  </div>
+</div>
+
+<a class="scroll-to-top rounded" href="#page-top">
+  <i class="fas fa-angle-up"></i>
+</a>
+</body>
+</html>

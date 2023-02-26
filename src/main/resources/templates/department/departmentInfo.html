@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Department information</title>
+    <link th:replace="fragments/bootstrap.html">
+</head>
+<body id="page-top">
+<div id="wrapper">
+    <div th:insert="fragments/sidebar"></div>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <div th:insert="fragments/header"></div>
+
+            <div class="container-fluid">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Department information</h6>
+                        <div class="card-body" th:object="${department}">
+                            <h5 class="card-title" th:text="|*{name} department|"></h5>
+                            <p class="card-text" th:text="|Description: *{description}|"></p>
+
+                            <p class="card-text">Head of department:
+                                <span class="" th:if="${department.head != null}">
+                                    <a th:text="|*{head.firstName}  *{head.lastName}|" th:href="@{/users/{id}(id=*{head.id})}"></a>
+                                </span>
+                                <span th:unless="${department.head != null}">don't have head</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:insert="fragments/footer"></div>
+    </div>
+
+
+</div>
+</body>
+</html>
