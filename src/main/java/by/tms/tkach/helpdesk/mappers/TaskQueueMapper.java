@@ -6,6 +6,7 @@ import by.tms.tkach.helpdesk.dto.taskQueue.response.TaskQueueDetailsResponse;
 import by.tms.tkach.helpdesk.dto.taskQueue.response.TaskQueueShortResponseDTO;
 import by.tms.tkach.helpdesk.entities.TaskQueue;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
 
@@ -22,9 +23,6 @@ public interface TaskQueueMapper {
 
     TaskQueue toTaskQueue(TaskQueueCreateRequestDTO taskQueue);
 
+    @Mapping(source = "departmentName", target = "department.name")
     TaskQueue toTaskQueue(TaskQueueUpdateDTO taskQueue);
-
-    TaskQueue toUpdate(TaskQueueUpdateDTO taskQueue);
-
-
 }

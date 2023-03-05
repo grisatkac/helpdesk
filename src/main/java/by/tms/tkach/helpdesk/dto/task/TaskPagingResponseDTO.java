@@ -1,4 +1,4 @@
-package by.tms.tkach.helpdesk.dto.user;
+package by.tms.tkach.helpdesk.dto.task;
 
 import by.tms.tkach.helpdesk.dto.department.PagingDTO;
 import by.tms.tkach.helpdesk.dto.task.response.TaskDetailsResponseDTO;

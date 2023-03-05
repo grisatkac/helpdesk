@@ -7,7 +7,7 @@ import org.hibernate.Hibernate;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.Objects;
-
+/*
 @Getter
 @Setter
 @ToString
@@ -32,4 +32,4 @@ public class Role extends AbstractEntity {
     public int hashCode() {
         return Objects.hash(id);
     }
-}
+}*/

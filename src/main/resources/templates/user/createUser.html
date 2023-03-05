@@ -20,25 +20,29 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                                     </div>
-                                    <form class="user" action="/auth/register" method="post">
+                                    <form class="user" action="/register" method="post" th:object="${user}">
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <input type="text" name="firstName" class="form-control form-control-user" id="exampleFirstName"
                                                        placeholder="First Name">
+                                                <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="alert alert-danger" role="alert"/>
                                             </div>
                                             <div class="col-sm-6">
                                                 <input type="text" name="lastName" class="form-control form-control-user" id="exampleLastName"
                                                        placeholder="Last Name" required>
+                                                <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="alert alert-danger" role="alert"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <input type="email" name="email" class="form-control form-control-user" id="exampleInputEmail"
                                                    placeholder="Email Address">
+                                            <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="alert alert-danger" role="alert"/>
                                         </div>
 
                                         <div class="form-group">
                                             <input type="login" name="login" class="form-control form-control-user" id="exampleInputLogin"
                                                    placeholder="Login">
+                                            <div th:if="${#fields.hasErrors('login')}" th:errors="*{login}" class="alert alert-danger" role="alert"/>
                                         </div>
                                         <div class="form-group">
                                             <input type="password" name="password" class="form-control form-control-user"

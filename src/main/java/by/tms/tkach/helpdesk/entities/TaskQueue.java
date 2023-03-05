@@ -3,6 +3,7 @@ package by.tms.tkach.helpdesk.entities;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.List;
@@ -21,19 +22,19 @@ public class TaskQueue extends AbstractEntity {
     String name;
     String description;
 
-    /*@OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn
-    @ToString.Exclude
-    Department department;*/
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
+    @ToString.Exclude
     Department department;
 
-    @ManyToMany(mappedBy = "queues")
+    /*@ManyToMany(mappedBy = "queues", cascade = {CascadeType.MERGE, CascadeType.MERGE, CascadeType.PERSIST})
+    @ToString.Exclude
+            @Cascade(org.hibernate.annotations.CascadeType.REMOVE)*/
+    @ManyToMany(mappedBy = "queues",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @ToString.Exclude
     List<User> users;
 
-    @OneToMany(mappedBy = "taskQueue")
+    @OneToMany(mappedBy = "taskQueue", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @ToString.Exclude
     List<Task> tasks;
 

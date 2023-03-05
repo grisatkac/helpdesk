@@ -30,12 +30,12 @@ public class Task extends AbstractEntity {
     @Enumerated(EnumType.STRING)
     private Urgency urgency;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = /*CascadeType.MERGE*/ CascadeType.ALL)
     @JoinColumn(name = "owner_id")
     @ToString.Exclude
     private User ownerUser;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "executor_id")
     @ToString.Exclude
     private User executorUser;

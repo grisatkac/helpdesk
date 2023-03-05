@@ -2,6 +2,7 @@ package by.tms.tkach.helpdesk.config.security;
 
 
 import by.tms.tkach.helpdesk.dto.auth.AuthUser;
+import by.tms.tkach.helpdesk.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,11 +16,16 @@ import java.util.List;
 @Data
 public class CustomUserDetails implements UserDetails {
 
-    private AuthUser user;
+    //private AuthUser user;
+    private User user;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(user.getRole().getName()));
+        return List.of(new SimpleGrantedAuthority(user.getRole().name()/*.getName()*/));
+    }
+
+    public Long getId() {
+        return user.getId();
     }
 
     @Override

@@ -1,11 +1,11 @@
 package by.tms.tkach.helpdesk.dto.auth;
 
 import by.tms.tkach.helpdesk.dto.department.response.DepartmentResponseDTO;
-import by.tms.tkach.helpdesk.dto.role.response.RoleResponseDTO;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+//import by.tms.tkach.helpdesk.dto.role.response.RoleResponseDTO;
+import lombok.*;
 
+@Getter
+@Setter
 @Data
 @EqualsAndHashCode
 @NoArgsConstructor
@@ -16,6 +16,7 @@ public class AuthUser {
     private String email;
     private String login;
     private String password;
-    private RoleResponseDTO role;
+    //private RoleResponseDTO role;
+    private String role;
     private DepartmentResponseDTO department;
 }

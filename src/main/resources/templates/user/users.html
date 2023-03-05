@@ -18,12 +18,6 @@
                         <h6 class="m-0 font-weight-bold text-primary">Users</h6>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <select th:field="${page.pageSize}">
-                                    <option value="5">5</option>
-                                    <option value="10">10</option>
-                                    <option value="15">15</option>
-                                    <option value="25">25</option>
-                                </select>
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                     <tr>
@@ -33,6 +27,8 @@
                                             Last name</a></th>
                                         <td>Email</td>
                                         <td>Login</td>
+                                        <td>Role</td>
+                                        <td>Department</td>
                                         <th sec:authorize="hasRole('ROLE_ADMIN')">Action</th>
                                     </tr>
                                     </thead>
@@ -43,6 +39,8 @@
                                         <th>Last name</th>
                                         <td>Email</td>
                                         <td>Login</td>
+                                        <td>Role</td>
+                                        <td>Department</td>
                                         <th sec:authorize="hasRole('ROLE_ADMIN')">Action</th>
                                     </tr>
                                     </tfoot>
@@ -56,6 +54,8 @@
                                     <td th:text="${user.lastName}"></td>
                                     <td th:text="${user.email}"></td>
                                     <td th:text="${user.login}"></td>
+                                    <td th:text="${user.role}"></td>
+                                    <td th:text="${user?.department} ? ${user.department.name} : 'NONE'"></td>
 
                                     <td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/users/update/{id}(id=${user.id})}">Edit</a></td>
                                     </tbody>

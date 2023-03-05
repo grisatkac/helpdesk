@@ -48,7 +48,13 @@
                         </div>
                     </div>
                 </div>
+                <div sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a th:href="@{/tasks/update/{id}(id=*{id})}">
+                        <div class="btn btn-primary  col-xl-4 col-md-6 mb-5" >Edit information</div>
+                    </a>
+                </div>
             </div>
+
         </div>
         <div th:insert="fragments/footer"></div>
     </div>

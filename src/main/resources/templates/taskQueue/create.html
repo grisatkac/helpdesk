@@ -21,7 +21,7 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Create task queue</h1>
                                     </div>
-                                    <form class="user" th:action="@{/taskQueues/create}" method="post">
+                                    <form class="user" th:action="@{/taskQueues/create}" th:object="${queueToCreate}" method="post">
                                         <div class="form-group">
                                             <label for="exampleInputName" class="form-label">Name</label>
                                             <input
@@ -30,22 +30,26 @@
                                                     name="name"
                                                     id="exampleInputName"
                                                     aria-describedby="emailHelp"
-                                                    placeholder="Enter task queue name...">
+                                                    placeholder="Enter task queue name..."
+                                                    th:value="${queueToCreate.name != null}? ${queueToCreate.name} : ''">
+                                                    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="alert alert-danger" role="alert"/>
                                         </div>
 
                                         <div class="form-group">
                                             <label
                                                     for="exampleInputDescription"
                                                     class="form-label">
-                                                Description
+                                                    Description
                                             </label>
                                             <p>
                                         <textarea
                                             class="form-control"
                                             id="exampleInputDescription"
                                             name="description"
-                                            placeholder="description">
+                                            placeholder="description"
+                                            th:value="${queueToCreate.description != null}? ${queueToCreate.description} : ''">
                                          </textarea></p>
+                                            <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="alert alert-danger" role="alert"/>
                                         </div>
 
                                         <hr>

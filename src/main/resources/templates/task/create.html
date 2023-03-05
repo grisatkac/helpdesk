@@ -16,7 +16,7 @@
                     <div class="card shadow mb-4">
                         <div class="card-body">
                             <div class="mt-4  small">
-                                <div th:if="${success == null}" class="p-5">
+                                <div th:if="${success == null}" th:object="${taskToCreate}" class="p-5">
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Create task</h1>
                                     </div>
@@ -29,7 +29,9 @@
                                                     name="name"
                                                     id="exampleInputName"
                                                     aria-describedby="emailHelp"
-                                                    placeholder="Title of the task">
+                                                    placeholder="Title of the task"
+                                                    th:value="${taskToCreate.name}">
+                                            <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="alert alert-danger" role="alert"/>
                                         </div>
 
                                         <div class="form-group">
@@ -43,8 +45,10 @@
                                                     class="form-control"
                                                     id="exampleInputDescription"
                                                     name="description"
-                                                    placeholder="Task description">
+                                                    placeholder="Task description"
+                                                    th:value="${taskToCreate.description}">
                                                 </textarea>
+                                            <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="alert alert-danger" role="alert"/>
                                             </p>
                                         </div>
 
@@ -56,8 +60,8 @@
                                                     id="inputDatalist"
                                                     name="urgency"
                                                     placeholder="Type to search urgency"
-                                                    value="LOW">
-
+                                                    th:value="${taskToCreate.urgency != null}? ${taskToCreate.urgency} : LOW">
+                                            <!--value="LOW"-->
                                             <datalist id="urgencyListOptions" >
                                                 <th:block th:each="urgency: ${data.urgencyList}">
                                                     <option th:value="${urgency.name()}"></option>
@@ -74,14 +78,15 @@
                                                     list="taskQueueListOptions"
                                                     id="inputTaskQueueList"
                                                     name="taskQueueName"
-                                                    placeholder="Type to search urgency"
-                                                    >
+                                                    placeholder="Type to search queue name"
+                                                    th:value="${taskToCreate.taskQueueName != null}? ${taskToCreate.taskQueueName} : ''">
                                             <datalist id="taskQueueListOptions" >
                                                 <th:block th:each="taskQueue: ${data.queueNamesList}">
                                                         <option th:value="${taskQueue}"></option>
                                                     </p>
                                                 </th:block>
                                             </datalist>
+                                            <div th:if="${#fields.hasErrors('taskQueueName')}" th:errors="*{taskQueueName}" class="alert alert-danger" role="alert"/>
                                         </div>
 
                                         <hr>

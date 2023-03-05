@@ -15,7 +15,7 @@
             <div class="container-fluid">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Department information</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Queue information</h6>
                         <div class="card-body" th:object="${taskQueue}">
                             <h5 class="card-title" th:text="|*{name} task queue|"></h5>
                             <p class="card-text" th:text="|Description: *{description}|"></p>
@@ -27,6 +27,12 @@
                             </p>
                         </div>
                     </div>
+                </div>
+
+                <div sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a th:href="@{/taskQueues/update/{id}(id=*{id})}">
+                        <div class="btn btn-primary  col-xl-4 col-md-6 mb-5" >Edit information</div>
+                    </a>
                 </div>
             </div>
         </div>

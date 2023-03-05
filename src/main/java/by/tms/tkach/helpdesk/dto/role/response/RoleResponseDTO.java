@@ -4,8 +4,8 @@ import by.tms.tkach.helpdesk.dto.role.RoleDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@Data
+/*@Data
 @EqualsAndHashCode(callSuper = true)
 public class RoleResponseDTO extends RoleDTO {
     private Long id;
-}
+}*/

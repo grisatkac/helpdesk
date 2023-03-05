@@ -17,9 +17,9 @@
   <hr class="sidebar-divider my-0">
 
   <li class="nav-item active">
-    <a class="nav-link" href="index.html">
+    <a class="nav-link" href="main">
       <i class="fas fa-fw fa-chart-line"></i>
-      <span>Dashboard</span></a>
+      <span>Main</span></a>
   </li>
 
   <hr class="sidebar-divider">
@@ -39,15 +39,14 @@
         <h6 class="collapse-header">Type of tasks:</h6>
         <a class="collapse-item" href="/tasks/all/assignable">Assigned tasks</a>
         <a class="collapse-item" href="/tasks/all/executable">Executable tasks</a>
-        <a class="collapse-item" href="/tasks/all">Tasks</a>
+        <a class="collapse-item" href="/tasks/all/toProcess">Tasks to process</a>
         <a class="collapse-item" href="/tasks/create">Create task</a>
-        <a class="collapse-item" href="/tasks/all/urgency?filter=MIDDLE">Low urgency</a>
       </div>
     </div>
   </li>
 
   <li class="nav-item">
-    <a class="nav-link collapsed" href="404.html">
+    <a class="nav-link collapsed" href="/taskQueues/all">
       <i class="fas fa-fw fa-list-ul"></i>
       <span>Queues</span>
     </a>
@@ -67,10 +66,12 @@
   </li>
 
   <li class="nav-item">
-    <a class="nav-link" href="/users">
+    <a class="nav-link" href="/users/all">
       <i class="fas fa-fw fa-users"></i>
       <span>Users</span></a>
   </li>
+
+
 
   <hr class="sidebar-divider d-none d-md-block">
 
@@ -81,20 +82,6 @@
   <div sec:authorize="hasRole('ROLE_ADMIN')" class="sidebar-heading">
     Admin management
   </div>
-
-  <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers"
-       aria-expanded="true" aria-controls="collapseUsers">
-      <i class="fas fa-fw fa-clipboard-list"></i>
-      <span>Users management</span>
-    </a>
-    <div id="collapseUsers" class="collapse" aria-labelledby="headingUsers" data-parent="#accordionSidebar">
-      <div class="bg-white py-2 collapse-inner rounded">
-        <a class="collapse-item" href="/users/create">Create users</a>
-        <a class="collapse-item" href="/users/all">List of users</a>
-      </div>
-    </div>
-  </li>
 
   <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDepartments"

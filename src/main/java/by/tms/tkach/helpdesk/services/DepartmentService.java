@@ -6,11 +6,13 @@ import by.tms.tkach.helpdesk.dto.department.response.DepartmentPagingResponseDTO
 import by.tms.tkach.helpdesk.dto.department.response.DepartmentShortResponseDTO;
 import by.tms.tkach.helpdesk.entities.Department;
 
+import java.util.Optional;
+
 public interface DepartmentService extends CrudService<Department> {
 
-    Department getByHeadId(Long id);
+    Department getByHeadId(Long userId);
 
-    Department getByName(String name);
+    Optional<Department> getByName(String name);
 
     DepartmentUpdateDTO getForUpdate(Long id);
 
@@ -20,7 +22,12 @@ public interface DepartmentService extends CrudService<Department> {
 
     DepartmentPagingResponseDTO getAllPageable(Integer pageNumber, Integer pageSize, String sortBy, String sortDir);
 
-    DepartmentUpdateDTO updateDepartment(Long id, DepartmentUpdateDTO department);
+    Department getByHeadLogin(String login);
 
-    boolean isExist(String name);
+    String validateDepartmentNameToCreate(String name);
+
+    String validateNameToUpdate(Department department);
+
+    String validateHeadLoginToUpdate(Department department);
+
 }

@@ -8,17 +8,17 @@ import by.tms.tkach.helpdesk.dto.department.response.DepartmentResponseDTO;
 import by.tms.tkach.helpdesk.dto.department.response.DepartmentShortResponseDTO;
 import by.tms.tkach.helpdesk.entities.Department;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring", uses = {UserMapper.class})
 public interface DepartmentMapper {
 
+    @Mapping(source = "headLogin", target = "head.login")
     Department toDepartment(DepartmentUpdateDTO department);
 
     Department toDepartment(DepartmentCreateRequestDTO department);
-
-    DepartmentResponseDTO toDepartmentResponse(Department department);
 
     DepartmentDetailsResponseDTO toDepartmentDetails(Department department);
 
@@ -26,9 +26,7 @@ public interface DepartmentMapper {
 
     DepartmentShortResponseDTO toShortDepartment(Department department);
 
+    @Mapping(source = "head.login", target = "headLogin")
     DepartmentUpdateDTO toDepartmentUpdate(Department department);
 
-
-
-    List<DepartmentPagingResponseDTO> toPagingResponse(List<Department> departments);
 }

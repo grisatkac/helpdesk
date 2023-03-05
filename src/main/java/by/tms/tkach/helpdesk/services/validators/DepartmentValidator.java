@@ -1,70 +1,48 @@
 package by.tms.tkach.helpdesk.services.validators;
 
-import by.tms.tkach.helpdesk.dto.department.DepartmentUpdateDTO;
-import by.tms.tkach.helpdesk.dto.department.request.DepartmentCreateRequestDTO;
 import by.tms.tkach.helpdesk.entities.Department;
-import by.tms.tkach.helpdesk.entities.User;
-import by.tms.tkach.helpdesk.mappers.DepartmentMapper;
 import by.tms.tkach.helpdesk.services.DepartmentService;
-import by.tms.tkach.helpdesk.services.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
+import lombok.Data;
+import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
-import java.util.Objects;
-
-@Component
+@Service
 @AllArgsConstructor
+@Data
 public class DepartmentValidator {
 
     private final DepartmentService departmentService;
-    private DepartmentMapper departmentMapper;
-    private final UserService userService;
+    public static boolean isValidToCreate = false;
+    public static boolean isIsValidToUpdate = false;
 
-    @Transactional
-    public Department validateAndPrepareDepartmentForUpdate(DepartmentUpdateDTO department, BindingResult bindingResult) {
-        Department departmentToUpdate = null;
-        Department byName = departmentService.getByName(department.getName());
+    public void validateDepartmentNameToCreate(String name, BindingResult bindingResult) {
+        String errorMessage = departmentService.validateDepartmentNameToCreate(name);
 
-        if (byName != null && !Objects.equals(byName.getId(), department.getId())) {
-            bindingResult.rejectValue(
-                    "name", "",
-                    "You can't update department name because department name must be unique and already exist");
-        }
-
-        User user = userService.getByLogin(department.getHeadLogin());
-        Department userDepartment = null;
-
-        if (user != null) {
-            userDepartment = user.getDepartment();
-        }
-
-        if (userDepartment != null && !userDepartment.equals(byName)) {
-            bindingResult.rejectValue("headLogin", "", "This user are head of another department");
+        if (!errorMessage.isEmpty()) {
+            bindingResult.rejectValue("name", "", errorMessage);
+            isValidToCreate = false;
         } else {
-            departmentToUpdate = departmentMapper.toDepartment(department);
-            departmentToUpdate.setHead(user);
+            isValidToCreate = true;
         }
-
-        return departmentToUpdate;
     }
 
-    @Transactional
-    public Department validateAndPrepareDepartmentForCreate(DepartmentCreateRequestDTO departmentCreateRequest, BindingResult bindingResult) {
-        Department departmentToCreate = null;
+    public void validateDepartmentToUpdate(Department department, BindingResult bindingResult) {
 
+        String departmentNameValidationErrorMessage = departmentService.validateNameToUpdate(department);
 
-        Department existDepartment = departmentService.getByName(departmentCreateRequest.getName());
-
-        if (existDepartment != null) {
-            bindingResult.rejectValue("name", "", "Department must be have unique name");
-        } else {
-            departmentToCreate = departmentMapper.toDepartment(departmentCreateRequest);
+        if (!departmentNameValidationErrorMessage.isEmpty()) {
+            bindingResult.rejectValue("name", "", departmentNameValidationErrorMessage);
+            isIsValidToUpdate = false;
         }
 
-        return departmentToCreate;
+        String headLoginValidationErrorMessage = departmentService.validateHeadLoginToUpdate(department);
+
+        if (!headLoginValidationErrorMessage.isEmpty()) {
+            bindingResult.rejectValue("headLogin", "", headLoginValidationErrorMessage);
+            isIsValidToUpdate = false;
+        } else {
+            isIsValidToUpdate = true;
+        }
     }
 }
-
-

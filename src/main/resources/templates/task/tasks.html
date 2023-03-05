@@ -21,25 +21,25 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                     <tr>
-                                        <th><a th:href="@{'/tasks/all/?pageNumber=' + ${page.currentPage} + '&sortBy=name&sortDir=' + ${page.reverseSortDir}}">
-                                            Name</a></th>
-                                        <th><a th:href="@{'/tasks/all/?pageNumber=' + ${page.currentPage} + '&sortBy=description&sortDir=' + ${page.reverseSortDir}}">
-                                            Description</a></th>
+                                        <td><a th:href="@{${page.currentURI} + '?pageNumber=' + ${page.currentPage} + '&sortBy=name&sortDir=' + ${page.reverseSortDir}}">
+                                            Name</a></td>
+                                        <td><a th:href="@{${page.currentURI} + '?pageNumber=' + ${page.currentPage} + '&sortBy=description&sortDir=' + ${page.reverseSortDir}}">
+                                            Description</a></td>
                                         <td>Urgency</td>
                                         <td>Status</td>
                                         <td>Created date</td>
-                                        <th sec:authorize="hasRole('ROLE_ADMIN')">Action</th>
+                                        <td> <!--sec:authorize="hasRole('ROLE_ADMIN')" --> Action</td>
                                     </tr>
                                     </thead>
 
                                     <tfoot>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Description</th>
+                                        <td>Name</td>
+                                        <td>Description</td>
                                         <td>Urgency</td>
                                         <td>Status</td>
                                         <td>Created date</td>
-                                        <th sec:authorize="hasRole('ROLE_ADMIN')">Action</th>
+                                        <td> <!--sec:authorize="hasRole('ROLE_ADMIN')"-->Action</td>
                                     </tr>
                                     </tfoot>
 
@@ -51,12 +51,19 @@
                                         <td th:text="${task.createdDate}"></td>
 
                                         <div>
-                                            <td th:if="${page.authUserId == task.userOwner.id && task.userExecutor == null && task.status == 'PROCESSING'}"><a th:href="@{/tasks/{id}/action/take(id=${task.id})}">Take</a></td>
-                                            <td th:if="${page.authUserId == task.userOwner.id && task.userExecutor != null && task.status == 'IN_PROGRESS'}"><a th:href="@{/tasks/{id}/action/complete(id=${task.id})}">Complete</a></td>
+                                            <th:block>
+                                            <div th:if="${task.status != 'COMPLETED'}">
+                                                <td th:if="${task.status == 'PROCESSING'}"><a th:href="@{/users/task/{id}/take(id=${task.id})}">Take</a></td>
+                                                <td th:if="${task.status == 'IN_PROGRESS'}"><a th:href="@{/users/task/{id}/complete(id=${task.id})}">Complete</a></td>
+                                            </div>
+                                            </th:block>
+                                            <div th:if="${task.status != 'PROCESSING' && task.status != 'IN_PROGRESS'}">
+                                                <td>NONE</td>
+                                            </div>
+
+                                            <!--<td th:unless="${task.status != 'PROCESSING' && task.status == 'IN_PROGRESS'}">NONE</td>-->
                                         </div>
                                         <!--<td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/departments/update/{id}(id=${task.id})}">Edit</a></td>-->
-
-
 
                                     </tbody>
 
@@ -66,20 +73,20 @@
                                 <nav aria-label="Page navigation" class="paging">
                                     <ul class="pagination" th:if="${page.totalPages > 1}">
                                         <li class="page-item" th:classappend="${page.currentPage < 1 ? 'disabled' : ''}">
-                                            <a class="page-link" th:href="@{${page.currentURI} + ${page.currentPage - 1} + '&sortBy=' + ${page.sortBy} + '&sortDir=' + ${page.sortDir}}"
+                                            <a class="page-link" th:href="@{${page.currentURI} + '?pageNumber=' + ${page.currentPage - 1} + '&sortBy=' + ${page.sortBy} + '&sortDir=' + ${page.sortDir}}"
                                                tabindex="-1">Previous</a>
                                         </li>
 
                                         <th:block th:each="item, index : ${#numbers.sequence(0, page.totalPages - 1)}">
                                             <li class="page-item" th:classappend="${index == page.currentPage? 'selected' : ''}">
-                                                <a class="page-link" th:href="@{${page.currentURI} + ${index.index} + '&sortBy=' + ${page.sortBy} + '&sortDir=' + ${page.sortDir}} "
+                                                <a class="page-link" th:href="@{${page.currentURI} + '?pageNumber=' + ${index.index} + '&sortBy=' + ${page.sortBy} + '&sortDir=' + ${page.sortDir}} "
                                                    th:text="${index.count}"></a>
                                             </li>
                                             </li>
                                         </th:block>
 
                                         <li class="page-item" th:classappend="${page.currentPage + 1  == page.totalPages? 'disabled' : ''}">
-                                            <a class="page-link" th:href="@{${page.currentURI} + ${page.currentPage + 1} + '&sortBy=' + ${page.sortBy} + '&sortDir=' + ${page.sortDir}}">Next</a>
+                                            <a class="page-link" th:href="@{${page.currentURI} + '?pageNumber=' + ${page.currentPage + 1} + '&sortBy=' + ${page.sortBy} + '&sortDir=' + ${page.sortDir}}">Next</a>
                                         </li>
 
                                     </ul>

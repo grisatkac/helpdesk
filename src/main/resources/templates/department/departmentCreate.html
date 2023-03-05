@@ -26,13 +26,13 @@
                       <label for="exampleInputName" class="form-label">Name</label>
                       <input
                              type="text"
-                             class="form-control"
                              name="name"
+                             class="form-control"
                              id="exampleInputName"
                              aria-describedby="emailHelp"
                              placeholder="Enter Department name..."
                              th:value="${department.name != null}? ${department.name} : ''">
-                      <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="alert alert-danger" role="alert"/>
+                            <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="alert alert-danger" role="alert"/>
                     </div>
 
                     <div class="form-group">
@@ -44,8 +44,8 @@
                       <p>
                         <textarea
                                 class="form-control"
-                                id="exampleInputDescription"
                                 name="description"
+                                id="exampleInputDescription"
                                 placeholder="description"
                                 th:value="${department.description != null}? ${department.description} : ''">
                         </textarea></p>

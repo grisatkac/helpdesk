@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 
 import java.util.Objects;
+import java.util.Optional;
 
 @Component
 @AllArgsConstructor
@@ -17,35 +18,38 @@ public class TaskQueueValidator {
 
     private final TaskQueueServiceImpl taskQueueService;
     private final TaskQueueMapper taskQueueMapper;
+    public static boolean isValidToCreate = false;
+    public static boolean isValidToUpdate = false;
 
-    public TaskQueue validateAndPrepareForCreate(TaskQueueCreateRequestDTO taskQueue, BindingResult bindingResult) {
-        TaskQueue taskQueueToCreate = null;
+    public void validateQueueToCreate(TaskQueue taskQueue, BindingResult bindingResult) {
+        String errorMessage = taskQueueService.validateTaskQueueNameToCreate(taskQueue);
 
-        TaskQueue taskQueueByName = taskQueueService.getByName(taskQueue.getName());
-
-        if (taskQueueByName != null) {
-            bindingResult.rejectValue("name", "", "Name of task queue must be unique");
-        } else{
-            taskQueueToCreate = taskQueueMapper.toTaskQueue(taskQueue);
+        if (!errorMessage.isEmpty()) {
+            bindingResult.rejectValue("name", "", errorMessage);
+            isValidToCreate = false;
+        } else {
+            isValidToCreate = true;
         }
-
-        return taskQueueToCreate;
     }
 
-    public TaskQueue validateAndPrepareForUpdate(TaskQueueUpdateDTO taskQueue, BindingResult bindingResult) {
-        TaskQueue taskQueueToUpdate = null;
-        TaskQueue byName = taskQueueService.getByName(taskQueue.getName());
+    public void validateQueueToUpdate(TaskQueue taskQueue, BindingResult bindingResult) {
+        String errorMessageOfValidationTaskQueueName = taskQueueService.validateNameToUpdate(taskQueue);
 
-        if (byName == null) {
-            return taskQueueMapper.toTaskQueue(taskQueue);
+        if (!errorMessageOfValidationTaskQueueName.isEmpty()) {
+            bindingResult.rejectValue("name", "", errorMessageOfValidationTaskQueueName);
+            isValidToUpdate = false;
         }
 
-        if (!Objects.equals(byName.getId(), taskQueue.getId())) {
-            bindingResult.reject("name", "You can't update task queue name because task queue name must be unique and already exist");
-        } else {
-            taskQueueToUpdate = taskQueueMapper.toTaskQueue(taskQueue);
+        String errorMessageOfValidationDepartmentName = taskQueueService.validateDepartmentNameToUpdate(taskQueue);
+
+        if (!errorMessageOfValidationDepartmentName.isEmpty()) {
+            bindingResult.rejectValue("departmentName", "", errorMessageOfValidationDepartmentName);
+            isValidToUpdate = false;
         }
 
-        return taskQueueToUpdate;
+
+        if (errorMessageOfValidationTaskQueueName.isEmpty() && errorMessageOfValidationDepartmentName.isEmpty()) {
+            isValidToUpdate = true;
+        }
     }
 }

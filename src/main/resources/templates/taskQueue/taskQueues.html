@@ -16,15 +16,9 @@
             <div class="container-fluid">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Departments</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Queues</h6>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <select th:field="${page.pageSize}">
-                                    <option value="5">5</option>
-                                    <option value="10">10</option>
-                                    <option value="15">15</option>
-                                    <option value="25">25</option>
-                                </select>
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                     <tr>
@@ -86,9 +80,7 @@
                                         <li class="page-item" th:classappend="${page.currentPage + 1  == page.totalPages? 'disabled' : ''}">
                                             <a class="page-link" th:href="@{'/taskQueues/all/?pageNumber=' + ${page.currentPage + 1} + '&sortBy=' + ${page.sortBy} + '&sortDir=' + ${page.sortDir}}">Next</a>
                                         </li>
-
                                     </ul>
-
                                 </nav>
                             </div>
                         </div>

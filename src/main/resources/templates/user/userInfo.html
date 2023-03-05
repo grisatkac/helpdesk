@@ -1,10 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Department information</title>
+    <link th:replace="fragments/bootstrap.html">
 </head>
-<body>
+<body id="page-top">
+<div id="wrapper">
+    <div th:insert="fragments/sidebar"></div>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <div th:insert="fragments/header"></div>
 
+            <div class="container-fluid">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">User information</h6>
+                        <div class="card-body" th:object="${user}">
+                            <h5 class="card-title" th:text="|*{firstName} *{lastName}|"></h5>
+                            <p class="card-text" th:text="|Email: *{email}|"></p>
+                            <p class="card-text" th:text="|Login: *{login}|"></p>
+                            <p class="card-text" th:text="|Role: *{role}|"></p>
+                            <p class="card-text">Department:
+                                <span class="" th:if="${user.department != null}">
+                                    <a th:text="|*{department.name}|" th:href="@{/departments/{id}(id=*{department.id})}"></a>
+                                </span>
+                                <span th:unless="${user.department != null}">User don't have department</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a th:href="@{/users/update/{id}(id=*{id})}">
+                        <div class="btn btn-primary  col-xl-4 col-md-6 mb-5" >Edit information</div>
+                    </a>
+
+                    <a th:href="@{/users/{id}/taskQueues(id=*{id})}">
+                        <div class="btn btn-primary  col-xl-4 col-md-6 mb-5" >Manage task queues</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div th:insert="fragments/footer"></div>
+    </div>
+
+
+</div>
 </body>
 </html>
+
+
+
+

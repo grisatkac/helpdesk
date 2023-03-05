@@ -39,15 +39,19 @@
                                         <div class="form-group">
                                             <label for="exampleInputLogin" class="form-label">Head of department</label>
                                             <input type="text" class="form-control"
-                                                   id="exampleInputLogin" placeholder="Enter user login" name="headLogin" th:value="${departmentToUpdate?.getHeadLogin()}" value="Empty">
+                                                   id="exampleInputLogin" placeholder="Enter user login" name="headLogin"
+                                                   th:value="${departmentToUpdate?.getHeadLogin()}" value="Empty">
                                             <div th:if="${#fields.hasErrors('headLogin')}" th:errors="*{headLogin}" class="alert alert-danger" role="alert"/>
                                         </div>
 
                                         <hr>
 
+
                                         <div class="row justify-content-around">
                                             <button  type="submit" class="btn btn-primary col-xl-4 col-md-6 mb-5">Edit</button>
-                                            <a> <div class="btn btn-danger  col-xl-4 col-md-6 mb-5" ><a>delete</a> </div></a>
+                                            <div class="btn btn-danger  col-xl-4 col-md-6 mb-5 ">
+                                                <a class="text-white" th:href="@{/departments/delete/{id}(id=${departmentToUpdate.id})}">Delete</a>
+                                            </div>
                                         </div>
                                     </form>
                                 </div>

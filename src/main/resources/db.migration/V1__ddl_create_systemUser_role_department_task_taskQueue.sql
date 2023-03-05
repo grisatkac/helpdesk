@@ -1,7 +1,7 @@
-CREATE TABLE IF NOT EXISTS roles (
+/*CREATE TABLE IF NOT EXISTS roles (
     id BIGINT AUTO_INCREMENT PRIMARY KEY ,
     name varchar(10) not null
-);
+);*/
 
 CREATE TABLE IF NOT EXISTS system_users (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -10,9 +10,10 @@ CREATE TABLE IF NOT EXISTS system_users (
     email VARCHAR(50),
     login VARCHAR(30),
     password VARCHAR(255),
-    role_id BIGINT,
-    department_id BIGINT,
-    CONSTRAINT role_id_fk FOREIGN KEY (role_id) REFERENCES roles(id)
+    /*role_id BIGINT,*/
+    role varchar(10) not null,
+    department_id BIGINT/*,
+    CONSTRAINT role_id_fk FOREIGN KEY (role_id) REFERENCES roles(id)*/
 );
 
 CREATE TABLE IF NOT EXISTS departments (

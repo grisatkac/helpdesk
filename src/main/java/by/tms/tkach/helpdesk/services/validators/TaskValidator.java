@@ -1,37 +1,28 @@
 package by.tms.tkach.helpdesk.services.validators;
 
 import by.tms.tkach.helpdesk.dto.form.DefaultDataTaskInputFields;
-import by.tms.tkach.helpdesk.dto.task.TaskUpdateDTO;
-import by.tms.tkach.helpdesk.dto.task.request.TaskCreateRequestDTO;
 import by.tms.tkach.helpdesk.entities.Task;
 import by.tms.tkach.helpdesk.entities.TaskQueue;
-import by.tms.tkach.helpdesk.entities.User;
-import by.tms.tkach.helpdesk.entities.enums.task.Status;
 import by.tms.tkach.helpdesk.entities.enums.task.Urgency;
-import by.tms.tkach.helpdesk.exception.EntityNotFound;
-import by.tms.tkach.helpdesk.mappers.TaskMapper;
-import by.tms.tkach.helpdesk.repositories.TaskRepository;
+import by.tms.tkach.helpdesk.exception.UpdateError;
 import by.tms.tkach.helpdesk.services.TaskQueueService;
 import by.tms.tkach.helpdesk.services.TaskService;
-import by.tms.tkach.helpdesk.services.UserService;
 import by.tms.tkach.helpdesk.utils.AuthUserUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
+
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 @Component
 @AllArgsConstructor
 public class TaskValidator {
-
     private final TaskService taskService;
-    private final TaskMapper taskMapper;
     private final TaskQueueService taskQueueService;
-    private final UserService userService;
-    private final TaskRepository taskRepository;
+    public static boolean isValidToCreate = false;
 
     public DefaultDataTaskInputFields prepareDefaultDataForTaskFields() {
         List<String> allQueueNames = taskQueueService.findAllNames();
@@ -41,67 +32,46 @@ public class TaskValidator {
                 .build();
     }
 
-    @Transactional
-    public Task validateAndPrepareTaskForUpdate(TaskUpdateDTO taskUpdateDTO, BindingResult bindingResult) {
-        Task taskToUpdate = null;
+    public void validateToCreate(Task task, BindingResult bindingResult) {
+        String errorMessage = taskService.validateTaskToCreate(task);
 
-        TaskQueue queue = taskQueueService.getByName(taskUpdateDTO.getQueueName());
-
-        if (queue == null) {
-            bindingResult.rejectValue("queueName", "", "Incorrect task queue");
-            return taskToUpdate;
-        }
-
-        taskToUpdate = taskRepository.findTaskDetails(taskUpdateDTO.getId());
-        if (!Objects.equals(queue.getId(), taskToUpdate.getTaskQueue().getId())) {
-            taskToUpdate.setTaskQueue(queue);
-            taskToUpdate.setStatus(Status.PROCESSING);
-        }
-
-        taskMapper.updateTask(taskUpdateDTO, taskToUpdate);
-
-        return taskToUpdate;
-    }
-
-    @Transactional
-    public Task validateAndPrepareTaskFotCreate(TaskCreateRequestDTO taskCreateRequestDTO, BindingResult bindingResult) {
-        TaskQueue foundQueue = taskQueueService.getByName(taskCreateRequestDTO.getTaskQueueName());
-        Task taskToCreate = null;
-        if (foundQueue == null) {
-            bindingResult.rejectValue("queue", "", "This queue doesn't exist already. Please reload page to see actual queues");
+        if (!errorMessage.isEmpty()) {
+            bindingResult.rejectValue("taskQueueName", "", errorMessage);
+            isValidToCreate = false;
         } else {
-            taskToCreate = taskMapper.toTask(taskCreateRequestDTO);
-            taskToCreate.setTaskQueue(foundQueue);
+            isValidToCreate = true;
+        }
+    }
 
-            User ownerUser = userService.findById(AuthUserUtils.getAuthUser().getId());
-            taskToCreate.setOwnerUser(ownerUser);
-            taskToCreate.setStatus(Status.PROCESSING);
+    public void validateToUpdate(Task task, BindingResult bindingResult) {
+        Task taskById = taskService.findById(task.getId()).orElseThrow(() -> new UpdateError("Incorrect id"));
+        taskById.getStatus();
+        String errorMessageOfValidationStatus = taskService.validateStatusToUpdateTask(taskById.getStatus());
+
+        if (!errorMessageOfValidationStatus.isEmpty()) {
+            bindingResult.rejectValue("status", "", errorMessageOfValidationStatus);
         }
 
-        return taskToCreate;
+        String errorMessageOfValidationQueueName = taskService.validateQueueNameToUpdateTask(task.getTaskQueue().getName());
+
+        if (!errorMessageOfValidationQueueName.isEmpty()) {
+            bindingResult.rejectValue("queueName", "", errorMessageOfValidationQueueName);
+        }
+
     }
 
     @Transactional
-    public boolean prepareAndInteractWithTask(String operation, Long id) {
+    public boolean haveAccessToGetTask(Long taskId) {
+        Optional<Task> task = taskService.findById(taskId);
 
-        Task taskForOperation = taskService.findById(id);
-        Long userOwner = AuthUserUtils.getAuthUser().getId();
-        boolean result = false;
+        TaskQueue taskQueue = task.get().getTaskQueue();
 
-        if (!Objects.equals(taskForOperation.getOwnerUser().getId(), userOwner)) {
-            throw new EntityNotFound("not found");
+        List<TaskQueue> userQueues = AuthUserUtils.getAuthUser().getQueues();
+
+        if (task.isPresent()) {
+
         }
 
-
-        if (operation.equals("take") && taskForOperation.getStatus().equals(Status.PROCESSING)) {
-            User userExecutor = userService.findById(userOwner);
-            return taskService.takeTask(id, userExecutor);
-        }
-
-        if (operation.equals("complete") && taskForOperation.getStatus().equals(Status.IN_PROGRESS)){
-            return taskService.completeTask(id);
-        }
-
-        return result;
+        return true;
     }
 }

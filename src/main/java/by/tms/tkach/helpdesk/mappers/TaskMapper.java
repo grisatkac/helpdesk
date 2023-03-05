@@ -4,9 +4,7 @@ import by.tms.tkach.helpdesk.dto.task.TaskUpdateDTO;
 import by.tms.tkach.helpdesk.dto.task.request.TaskCreateRequestDTO;
 import by.tms.tkach.helpdesk.dto.task.response.TaskDetailsResponseDTO;
 import by.tms.tkach.helpdesk.dto.task.response.TaskResponseDTO;
-import by.tms.tkach.helpdesk.dto.task.response.TaskUpdateResponseDTO;
 import by.tms.tkach.helpdesk.entities.Task;
-import lombok.Builder;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -23,19 +21,14 @@ public interface TaskMapper {
 
     List<TaskDetailsResponseDTO> toTaskDetailsList(List<Task> tasks);
 
+    @Mapping(source = "taskQueueName", target ="taskQueue.name")
     Task toTask(TaskCreateRequestDTO task);
 
+    @Mapping(source = "queueName", target ="taskQueue.name")
     Task toTask(TaskUpdateDTO task);
-
-    TaskResponseDTO toTaskResponse(Task task);
-
 
     @Mapping(source = "taskQueue.name", target = "queueName")
     TaskUpdateDTO toTaskUpdate(Task task);
-
-    /*@Mapping(source = "taskQueue.name", target = "taskUpdate.queueName")
-    @Mapping(source = "urgency", target = "taskUpdate.urgency")
-    TaskUpdateResponseDTO toTaskUpdateResponse(Task task);*/
 
     void updateTask(TaskUpdateDTO taskUpdateDTO, @MappingTarget Task task);
 }

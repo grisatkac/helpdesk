@@ -1,4 +1,4 @@
-INSERT INTO departments (name, description)
+/*INSERT INTO departments (name, description)
 values ("Admin department", "Admin department"),
        ("Department2", "Description2"),
        ("Department3", "Description3"),
@@ -32,4 +32,4 @@ values ("task queue1", "description task queue 1", 1),
        ("task queue11", "description task queue 4", 2),
        ("task queue12", "description task queue 5", 2),
        ("task queue13", "description task queue 6", 2),
-       ("task queue14", "description task queue 7", 2);
+       ("task queue14", "description task queue 7", 2);*/

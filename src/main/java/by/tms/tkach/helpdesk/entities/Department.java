@@ -24,7 +24,7 @@ public class Department extends AbstractEntity{
     String name;
     String description;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = {CascadeType.DETACH, CascadeType.PERSIST}, fetch = FetchType.EAGER)
     //@MapsId
     @JoinColumn(name = "head_id")
     User head;
@@ -49,6 +49,6 @@ public class Department extends AbstractEntity{
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return getClass().hashCode();
     }
 }
