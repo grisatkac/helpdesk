@@ -38,7 +38,6 @@ public class TaskServiceImpl implements TaskService {
     private final TaskMapper taskMapper;
     private final TaskQueueService taskQueueService;
     private final UserRepository userRepository;
-    private final TaskQueueRepository taskQueueRepository;
 
     @Transactional
     @Override

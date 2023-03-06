@@ -62,8 +62,6 @@ public class TaskQueueServiceImpl implements TaskQueueService {
         return errorMessage;
     }
 
-
-
     @Override
     public Optional<TaskQueue> findById(Long id) {
         return taskQueueRepository.findById(id);
@@ -71,7 +69,7 @@ public class TaskQueueServiceImpl implements TaskQueueService {
 
     @Override
     public List<TaskQueue> getAll() {
-        return null;
+        return taskQueueRepository.findAll();
     }
 
     @Transactional

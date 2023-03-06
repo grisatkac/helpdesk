@@ -29,7 +29,7 @@ public class WebSecurityConfig {
                 .cors().configurationSource(configurationSource())
                 .and()
                 .authorizeRequests()
-                .antMatchers("/", "/static/**", "/css/**", "/vendor/**", "/js/**",  "/register", "/swagger-ui/**", "/rest/**", "/v3/api-docs/**").permitAll()
+                .antMatchers("/", "/static/**", "/css/**", "/vendor/**", "/js/**",  "/register"/*, "/swagger-ui/**", "/rest/**", "/v3/api-docs/**"*/).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().usernameParameter("login").loginPage("/login").defaultSuccessUrl("/main").permitAll()

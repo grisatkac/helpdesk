@@ -86,7 +86,7 @@ public class DepartmentServiceImpl implements DepartmentService {
                 throw new UpdateError(departmentNameValidationErrorMessage);
             }
 
-            if (department.getHead().getLogin().isEmpty()) {
+            if (department.getHead() == null || department.getHead().getLogin().isEmpty()) {
                 department.setHead(null);
             } else {
                 String headLoginValidationErrorMessage = validateHeadLoginToUpdate(department);
@@ -98,14 +98,18 @@ public class DepartmentServiceImpl implements DepartmentService {
         }
 
         Optional<User> userByLogin = userRepository.getByLogin(department.getHead().getLogin());
+        Department departmentToUpdate = departmentRepository.findById(department.getId()).get();
 
         if (userByLogin.isPresent()) {
-            department.setHead(userByLogin.get());
+            departmentToUpdate.setHead(userByLogin.get());
         } else {
-            department.setHead(null);
+            departmentToUpdate.setHead(null);
         }
 
-        return departmentRepository.save(department);
+        departmentToUpdate.setName(department.getName());
+        departmentToUpdate.setDescription(department.getDescription());
+
+        return departmentRepository.save(departmentToUpdate);
     }
 
     @Override
@@ -192,15 +196,11 @@ public class DepartmentServiceImpl implements DepartmentService {
                 .build();
     }
 
-
-
-
     private Page<Department> getPage(Integer pageNumber, Integer pageSize, String sortBy, String sortDir) {
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
         Pageable paging = PageRequest.of(pageNumber, pageSize, sort);
         return departmentRepository.findAll(paging);
     }
-
 
     @Override
     public List<Department> getAll() {

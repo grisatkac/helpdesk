@@ -13,6 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.when;
@@ -36,7 +37,8 @@ public class DepartmentServiceTest {
     private DepartmentDetailsResponseDTO departmentDetailsResponseDTO;
 
 
-    @BeforeEach void init() {
+    @BeforeEach
+    void init() {
         department = Department.builder()
                 .id(1L)
                 .name("Name test")
@@ -95,5 +97,35 @@ public class DepartmentServiceTest {
         DepartmentDetailsResponseDTO actual = departmentService.getDepartmentDetails(department.getId());
 
         assertEquals(departmentDetailsResponseDTO, actual);
+    }
+
+
+    @Test
+    void findByIdTest() {
+        when(departmentRepository.findById(department.getId())).thenReturn(Optional.of(department));
+
+        Optional<Department> actual = departmentService.findById(department.getId());
+
+        assertEquals(department, actual.get());
+    }
+
+    @Test
+    void updateTest() {
+        when(departmentRepository.save(department)).thenReturn(department);
+        when(departmentMapper.toDepartment(departmentUpdateDTO)).thenReturn(department);
+
+        Department actual = departmentService.update(departmentMapper.toDepartment(departmentUpdateDTO));
+
+        assertEquals(department, actual);
+    }
+
+    @Test
+    void getAllTest() {
+        List<Department> list = List.of(department);
+        when(departmentRepository.findAll()).thenReturn(list);
+
+        List<Department> actual = departmentService.getAll();
+
+        assertEquals(list, actual);
     }
 }

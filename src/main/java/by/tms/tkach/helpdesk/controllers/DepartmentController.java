@@ -20,7 +20,6 @@ import javax.validation.Valid;
 @Controller
 @AllArgsConstructor
 @RequestMapping("/departments")
-@Slf4j
 public class DepartmentController {
 
     private final DepartmentService departmentService;
@@ -34,7 +33,7 @@ public class DepartmentController {
 
     @ModelAttribute("department")
     public DepartmentCreateRequestDTO getDepartmentCreateRequest() {
-        return new DepartmentCreateRequestDTO();
+        return DepartmentCreateRequestDTO.builder().build();
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")

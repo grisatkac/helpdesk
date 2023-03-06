@@ -1,11 +1,13 @@
 package by.tms.tkach.helpdesk.dto.department.request;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @Data
+@Builder
 public class DepartmentCreateRequestDTO {
 
     @NotEmpty(message = "Department name can't be empty")
