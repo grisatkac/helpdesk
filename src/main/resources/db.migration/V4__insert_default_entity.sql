@@ -1,4 +1,4 @@
-/*INSERT INTO departments (name, description)
+INSERT INTO departments (name, description)
 values ("Admin department", "Admin department"),
        ("Department2", "Description2"),
        ("Department3", "Description3"),
@@ -12,7 +12,7 @@ values ("Admin department", "Admin department"),
        ("Department11", "Description11"),
        ("Department12", "Description12"),
        ("Department13", "Description13");
-
+/*
 INSERT INTO system_users(first_name, last_name, email, login, password, role_id, department_id)
 values ("administrator", "administrator", "administrator@gmail.com", "$2a$10$k/KNotSXH0DcdWYP1o92T.x9pRXUAynevUDi8hVmxFRJi/CjEEzYC", 1, 1),
        (user1, user1, user@gmail.com, "$2a$10$7LyPrxFeeQQXpd/8kQ0y2ul1MVx9e7I88MlF5Z1AC.Oyw5U4p61qG", 2, 2);

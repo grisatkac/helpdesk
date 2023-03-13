@@ -33,7 +33,7 @@ public class PublicController {
 
     @GetMapping("/register")
     public String registerPage(@ModelAttribute("user") UserCreateRequestDTO userCreate) {
-        return "/register";
+        return "register";
     }
 
     @PostMapping("/register")

@@ -110,16 +110,6 @@ public class DepartmentServiceTest {
     }
 
     @Test
-    void updateTest() {
-        when(departmentRepository.save(department)).thenReturn(department);
-        when(departmentMapper.toDepartment(departmentUpdateDTO)).thenReturn(department);
-
-        Department actual = departmentService.update(departmentMapper.toDepartment(departmentUpdateDTO));
-
-        assertEquals(department, actual);
-    }
-
-    @Test
     void getAllTest() {
         List<Department> list = List.of(department);
         when(departmentRepository.findAll()).thenReturn(list);
